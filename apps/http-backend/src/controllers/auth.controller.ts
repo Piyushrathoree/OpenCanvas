@@ -1,7 +1,6 @@
 import express, { Request, Response } from "express";
-import { registerUserSchema } from "../schema/registerUser";
-import { ZodError } from "zod";
-
+import { registerUserSchema } from "@repo/common/types";
+import { ZodError } from "@repo/common";
 const RegisterUser = async (req: Request, res: Response): Promise<any> => {
     try {
         const { name, email, username, password } = registerUserSchema.parse(

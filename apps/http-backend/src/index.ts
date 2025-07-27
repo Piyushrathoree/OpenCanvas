@@ -1,12 +1,10 @@
 import express from "express";
 const app = express();
 
-import dotenv from "dotenv";
+import { config } from "@repo/config";
+const PORT = config.PORT || 5000;
 
-dotenv.config();
-const PORT = process.env.PORT || 5000;
-
-console.log(process.env.PORT, process.env.JWT_SECRET);
+console.log(config.PORT, config.JWT_SECRET);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

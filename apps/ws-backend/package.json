@@ -10,6 +10,7 @@
     },
     "dependencies": {
         "@repo/typescript-config": "workspace:*",
+        "@repo/config": "workspace:*",
         "@types/ws": "^8.18.1",
         "ws": "^8.18.3"
     },

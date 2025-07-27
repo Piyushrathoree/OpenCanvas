@@ -1,7 +1,7 @@
 {
     "name": "http-backend",
     "version": "1.0.0",
-    "description": "",
+    "description": "http backend for backend",
     "main": "index.js",
     "scripts": {
         "build": "tsc -b",

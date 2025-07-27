@@ -1,7 +1,7 @@
 {
     "name": "ws-backend",
     "version": "1.0.0",
-    "description": "",
+    "description": "web socket server for realtime integration ",
     "main": "index.js",
     "scripts": {
         "build": "tsc -b",

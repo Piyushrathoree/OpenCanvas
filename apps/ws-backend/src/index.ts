@@ -1,6 +1,7 @@
 import WebSocket from "ws";
 import { jwt, JwtPayload } from "@repo/common";
 import { config } from "@repo/config";
+
 export async function CreateWebSocketServer() {
     const wss = new WebSocket.Server({ port: 8080 });
 
@@ -18,7 +19,11 @@ export async function CreateWebSocketServer() {
         }
 
         const decodedToken = jwt.verify(token, config.JWT_SECRET);
-        if (!decodedToken || !(decodedToken as JwtPayload).userId) {
+        if (typeof decodedToken === "string") {
+            ws.close(1008, "Invalid token");
+            return;
+        }
+        if (!decodedToken || !decodedToken.userId) {
             ws.close(1008, "Invalid token");
             return;
         }

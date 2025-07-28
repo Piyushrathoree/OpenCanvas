@@ -19,6 +19,12 @@ const RegisterUser = async (req: Request, res: Response): Promise<any> => {
             username,
             password, // In a real application, ensure to hash the password before saving
         };
+
+        // await userService.createUser(newUser);
+
+        return res
+            .status(201)
+            .json({ message: "User registered successfully" });
     } catch (error) {
         // 3. If validation fails, Zod throws an error
         if (error instanceof ZodError) {

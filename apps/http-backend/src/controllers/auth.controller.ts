@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import { Request, Response } from "express";
 import { registerUserSchema } from "@repo/common/types";
 import { ZodError } from "@repo/common";
 const RegisterUser = async (req: Request, res: Response): Promise<any> => {

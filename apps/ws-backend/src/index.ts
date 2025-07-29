@@ -1,11 +1,12 @@
-import WebSocket from "ws";
-import { jwt, JwtPayload } from "@repo/common";
+import { WebSocketServer, WebSocket } from "ws";
+import { jwt } from "@repo/common";
 import { config } from "@repo/config";
+import { IncomingMessage } from "http";
 
 export async function CreateWebSocketServer() {
-    const wss = new WebSocket.Server({ port: 8080 });
+    const wss = new WebSocketServer({ port: 8080 });
 
-    wss.on("connection", (ws, request) => {
+    wss.on("connection", (ws: WebSocket, request: IncomingMessage) => {
         console.log("New client connected");
         const url = request.url;
         if (!url) {
@@ -27,7 +28,7 @@ export async function CreateWebSocketServer() {
             ws.close(1008, "Invalid token");
             return;
         }
-        ws.on("message", (message) => {
+        ws.on("message", (message: Buffer | ArrayBuffer | Buffer[]) => {
             console.log(`Received message: ${message}`);
             // Echo the message back to the client
             ws.send(`Server received: ${message}`);

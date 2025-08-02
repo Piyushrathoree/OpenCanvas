@@ -2,9 +2,9 @@
     "name": "@repo/common",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "main": "./index.ts",
     "exports": {
-        "./index": "./index.ts",
+        "./index": "./src/index.ts",
         "./types": "./src/types.ts",
         "./hash": "./src/password.ts"
     },
@@ -17,7 +17,7 @@
     "keywords": [],
     "author": "",
     "license": "ISC",
-    "type": "commonjs",
+    "type": "module",
     "dependencies": {
         "@types/jsonwebtoken": "^9.0.10",
         "bcryptjs": "^3.0.2",

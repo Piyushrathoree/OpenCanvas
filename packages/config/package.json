@@ -6,9 +6,7 @@
         "./config": "./src/index.ts"
     },
     "type": "module",
-    "dependencies": {
-        "zod": "^3.23.8"
-    },
+   
     "devDependencies": {
         "@types/node": "^22.15.3",
         "@repo/typescript-config": "workspace:*"

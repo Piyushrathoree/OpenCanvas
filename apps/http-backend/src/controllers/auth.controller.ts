@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import { loginUserSchema, registerUserSchema } from "@repo/common/types";
-import { ZodError } from "@repo/common";
+import { ZodError } from "@repo/common/index";
 import { PrismaClient } from "@repo/db/client";
 import { hashPassword, comparePassword } from "@repo/common/hash";
-import { jwt } from "@repo/common";
-import { config } from "@repo/config";
+import { JWT } from "@repo/common/index";
+import { config } from "@repo/config/config";
 
 const prisma = new PrismaClient();
 
@@ -40,12 +40,12 @@ const RegisterUser = async (req: Request, res: Response): Promise<any> => {
                 .status(500)
                 .json({ message: "User registration failed" });
         }
-        const token = jwt.sign(
+        const token = JWT.sign(
             {
                 userId: user.id,
                 email: user.email,
             },
-            config.JWT_SECRET
+            config.jwtSecret
         );
         if (!token) {
             return res.status(500).json({ message: "Token generation failed" });
@@ -76,12 +76,12 @@ const LoginUser = async (req: Request, res: Response): Promise<any> => {
     if (!isPasswordValid) {
         return res.status(401).json({ message: "Invalid password" });
     }
-    const token = jwt.sign(
+    const token = JWT.sign(
         {
             userId: user.id,
             email: user.email,
         },
-        config.JWT_SECRET
+        config.jwtSecret
     );
     if (!token) {
         return res.status(500).json({ message: "Token generation failed" });

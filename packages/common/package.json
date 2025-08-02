@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "exports": {
-        ".": "./index.ts",
+        "./index": "./index.ts",
         "./types": "./src/types.ts",
         "./hash": "./src/password.ts"
     },

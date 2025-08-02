@@ -1,8 +1,8 @@
-import { jwt } from "@repo/common";
-import { config } from "@repo/config";
+import { JWT } from "@repo/common/index";
+import { config } from "@repo/config/config";
 
 export const generateToken = async (email: string) => {
-    const token = jwt.sign({ email }, config.JWT_SECRET);
+    const token = JWT.sign({ email }, config.jwtSecret);
     if (!token) {
         throw new Error("Failed to generate token");
     }

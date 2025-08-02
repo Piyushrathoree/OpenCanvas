@@ -1,6 +1,6 @@
 import { WebSocketServer, WebSocket } from "ws";
-import { jwt } from "@repo/common";
-import { config } from "@repo/config";
+import { JWT } from "@repo/common/index";
+import { config } from "@repo/config/config";
 import { IncomingMessage } from "http";
 
 export async function CreateWebSocketServer() {
@@ -19,7 +19,7 @@ export async function CreateWebSocketServer() {
             return;
         }
 
-        const decodedToken = jwt.verify(token, config.JWT_SECRET);
+        const decodedToken = JWT.verify(token, config.jwtSecret);
         if (typeof decodedToken === "string") {
             ws.close(1008, "Invalid token");
             return;

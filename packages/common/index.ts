@@ -1,5 +1,11 @@
 import z, { ZodError } from "zod"; // for export zod
-import jwt, { JwtPayload } from "jsonwebtoken"; // for export jwt
 export * from "./src/types";
-export { ZodError, z, jwt };
-export type { JwtPayload };
+export { ZodError, z };
+
+/////
+// packages/common/src/index.ts
+
+import jwt from "jsonwebtoken"; // for export jwt
+const JWT = jwt;
+export { JWT };
+export type { JwtPayload } from "jsonwebtoken";

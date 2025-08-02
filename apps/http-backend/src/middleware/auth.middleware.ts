@@ -1,5 +1,5 @@
-import { jwt, JwtPayload } from "@repo/common";
-import { config } from "@repo/config";
+import { JWT, JwtPayload } from "@repo/common/index";
+import { config } from "@repo/config/config";
 import { Request, Response, NextFunction } from "express";
 
 // Extend Express Request interface to include userId
@@ -21,7 +21,7 @@ const authMiddleware = async (
         if (!token) {
             return res.status(401).json({ message: "No token provided" });
         }
-        const decoded = jwt.verify(token, config.JWT_SECRET);
+        const decoded = JWT.verify(token, config.jwtSecret);
         if (!decoded || !(decoded as JwtPayload).userId) {
             return res.status(401).json({ message: "unauthorized" });
         }

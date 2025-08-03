@@ -3,17 +3,16 @@ import {
     DeleteUserAccount,
     GetUserProfile,
     LoginUser,
-    LogoutUser,
     RegisterUser,
     UpdateUserProfile,
 } from "../controllers/auth.controller";
+import authMiddleware from "../middleware/auth.middleware";
 const router: import("express").Router = Router();
 
 router.post("/register", RegisterUser);
 router.post("/login", LoginUser);
-router.post("/logout", LogoutUser);
-router.get("/profile", GetUserProfile);
-router.put("/profile", UpdateUserProfile);
-router.delete("/account", DeleteUserAccount);
+router.get("/profile", authMiddleware, GetUserProfile);
+router.put("/profile", authMiddleware, UpdateUserProfile);
+router.delete("/account", authMiddleware, DeleteUserAccount);
 
 export default router;

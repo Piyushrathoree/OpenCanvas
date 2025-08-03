@@ -88,15 +88,57 @@ const LoginUser = async (req: Request, res: Response): Promise<any> => {
     }
     return res.status(200).json({ message: "Login successful", token });
 };
-const LogoutUser = (req: Request, res: Response): any => {};
-const GetUserProfile = (req: Request, res: Response): any => {};
-const UpdateUserProfile = (req: Request, res: Response): any => {};
-const DeleteUserAccount = (req: Request, res: Response): any => {};
+const GetUserProfile = async (req: Request, res: Response): Promise<any> => {
+    const userId = req.userId;
+    if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+    }
+    const user = await prisma.user.findUnique({
+        where: { id: userId },
+    });
+    if (!user) {
+        return res.status(404).json({ message: "User not found" });
+    }
+    return res.status(200).json({ user });
+};
+const UpdateUserProfile = async (req: Request, res: Response): Promise<any> => {
+    const userId = req.userId;
+    if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+    }
+    const user = await prisma.user.findUnique({
+        where: { id: userId },
+    });
+    if (!user) {
+        return res.status(404).json({ message: "User not found" });
+    }
+    const { name, email, username } = req.body;
+    const updatedUser = await prisma.user.update({
+        where: { id: userId },
+        data: { name, email, username },
+    });
+    return res.status(200).json({ user: updatedUser });
+};
+const DeleteUserAccount = async (req: Request, res: Response): Promise<any> => {
+    const userId = req.userId;
+    if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+    }
+    const user = await prisma.user.findUnique({
+        where: { id: userId },
+    });
+    if (!user) {
+        return res.status(404).json({ message: "User not found" });
+    }
+    await prisma.user.delete({
+        where: { id: userId },
+    });
+    return res.status(204).send();
+};
 
 export {
     RegisterUser,
     LoginUser,
-    LogoutUser,
     GetUserProfile,
     UpdateUserProfile,
     DeleteUserAccount,

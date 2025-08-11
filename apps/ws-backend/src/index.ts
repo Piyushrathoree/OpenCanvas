@@ -1,7 +1,15 @@
 import { WebSocketServer, WebSocket } from "ws";
-import { JWT } from "@repo/common/index";
-import { config } from "@repo/config/config";
+
 import { IncomingMessage } from "http";
+import checkAuth from "./checkAuth.js";
+
+interface User {
+    ws: WebSocket;
+    userId: string;
+    rooms: string[];
+}
+
+const users: User[] = [];
 
 export async function CreateWebSocketServer() {
     const wss = new WebSocketServer({ port: 8080 });
@@ -18,13 +26,8 @@ export async function CreateWebSocketServer() {
             ws.close(1008, "No token provided");
             return;
         }
-
-        const decodedToken = JWT.verify(token, config.jwtSecret);
-        if (typeof decodedToken === "string") {
-            ws.close(1008, "Invalid token");
-            return;
-        }
-        if (!decodedToken || !decodedToken.userId) {
+        const userId = checkAuth(token);
+        if (!userId) {
             ws.close(1008, "Invalid token");
             return;
         }

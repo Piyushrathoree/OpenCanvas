@@ -31,11 +31,7 @@ export async function CreateWebSocketServer() {
             ws.close(1008, "Invalid token");
             return;
         }
-        ws.on("message", (message: Buffer | ArrayBuffer | Buffer[]) => {
-            console.log(`Received message: ${message}`);
-            // Echo the message back to the client
-            ws.send(`Server received: ${message}`);
-        });
+        const rooms = new Map<string, Set<WebSocket>>();
 
         ws.on("close", () => {
             console.log("Client disconnected");

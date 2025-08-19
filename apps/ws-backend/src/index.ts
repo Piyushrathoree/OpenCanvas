@@ -13,7 +13,7 @@ const users: User[] = [];
 
 export async function CreateWebSocketServer() {
     const wss = new WebSocketServer({ port: 8080 });
-
+    const rooms = new Map<string, Set<WebSocket>>();
     wss.on("connection", (ws: WebSocket, request: IncomingMessage) => {
         console.log("New client connected");
         const url = request.url;
@@ -31,7 +31,7 @@ export async function CreateWebSocketServer() {
             ws.close(1008, "Invalid token");
             return;
         }
-        const rooms = new Map<string, Set<WebSocket>>();
+        
 
         ws.on("close", () => {
             console.log("Client disconnected");
